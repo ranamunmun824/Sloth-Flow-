@@ -1,0 +1,6 @@
+{
+  "name": "SlothFlow",
+  "description": "The Lazy-Day AI Assistant powered by open-weight Gemma 4 for calm, small-step productivity.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

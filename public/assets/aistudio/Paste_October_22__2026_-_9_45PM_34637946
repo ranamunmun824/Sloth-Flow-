@@ -1,0 +1,837 @@
+# BUILD SLOTHFLOW: AN OPEN-WEIGHT AI PRODUCTIVITY ASSISTANT
+
+Act as a senior full-stack engineer, AI application architect, UI/UX designer, and developer advocate.
+
+Build a complete, functional, responsive web application named **SlothFlow — The Lazy-Day AI Assistant**.
+
+Do not merely provide a plan, wireframe, or code snippets. Create the actual working application in the current Google AI Studio Build workspace, generate all necessary files, implement the features, run the available checks, and fix errors.
+
+The application must use **Gemma 4 as its runtime AI model**. Do not silently substitute Gemini or another proprietary model when a Gemma request fails.
+
+The application must also include a working DEV.to article creation workflow so that its owner can generate a technical blog post about the project, edit it, save it as a draft, or explicitly publish it to DEV.to.
+
+# 1. PROJECT VISION
+
+Application name: SlothFlow
+
+Tagline: "Do less busywork. Keep your brain for better things."
+
+Project theme: Slow and Steady — building with open-weight models or open-source AI that rewards laziness.
+
+Primary concept:
+
+SlothFlow is a lightweight productivity assistant that removes unnecessary mental work.
+
+Users often have scattered thoughts, long notes, messy to-do lists, difficult messages to reply to, and too many small tasks competing for their attention.
+
+SlothFlow allows them to provide that unorganized input and uses Gemma 4 to produce useful, concise, actionable results.
+
+The application should favor small steps, less cognitive effort, realistic schedules, and practical automation instead of overwhelming users with complicated productivity systems.
+
+The project must demonstrate why open AI innovation matters, especially model choice, local inference, privacy, offline capability, portability, and the ability to customize the system.
+
+Do not falsely claim that all deployment modes are offline or private. Clearly distinguish between local inference and hosted inference.
+
+# 2. TECHNOLOGY STACK
+
+Build a full-stack web application using:
+
+* React for the frontend.
+* TypeScript for type safety.
+* The Node.js server runtime supported by Google AI Studio Build.
+* A clean component-based architecture.
+* The official @google/genai JavaScript SDK for hosted Gemma 4 inference.
+* Ollama's OpenAI-compatible API for local Gemma 4 inference.
+* DEV.to's Forem API for blog article creation.
+* localStorage for user preferences and optional local task history.
+* Responsive CSS or the styling framework supported by the generated project.
+* Lucide icons or another lightweight icon library if appropriate.
+
+Follow the framework and project conventions already present in the AI Studio workspace. Do not unnecessarily replace a working project configuration.
+
+Do not place API keys in browser code, source-controlled files, public configuration, or client-side environment variables.
+
+Use server-side environment variables for secrets.
+
+# 3. GEMMA 4 AI ARCHITECTURE
+
+Gemma 4 must be the actual model behind the application's AI functionality.
+
+Implement two inference modes.
+
+## Mode A: Hosted Gemma 4
+
+Use Google's supported Gemma 4 API integration.
+
+Use the official @google/genai SDK and the following supported model ID as the default hosted model:
+
+gemma-4-26b-a4b-it
+
+Allow an administrator or developer to change the configured model to:
+
+gemma-4-31b-it
+
+Use the server-side GEMINI_API_KEY environment variable supplied or configured in Google AI Studio.
+
+Create a server-side endpoint such as:
+
+POST /api/ai/generate
+
+The endpoint should accept a validated request containing the feature name, user input, relevant preferences, and output format.
+
+The server must execute the task using Gemma 4 and return a validated result.
+
+The browser must never receive the server's API key.
+
+Do not hard-code a user's prompt into the server. Construct each request from validated user input.
+
+If the API is unavailable, the request fails, or a model is not enabled for the configured account, show a useful error.
+
+Never silently switch to a Gemini model or another closed model.
+
+## Mode B: Local Gemma 4 through Ollama
+
+Support genuine local inference through Ollama.
+
+Use the OpenAI-compatible endpoint:
+
+http://localhost:11434/v1/chat/completions
+
+Make the base URL configurable in the application settings.
+
+Use this default local model:
+
+gemma4:e2b
+
+Allow the user to change the model name to another installed Gemma 4 variant, such as gemma4:e4b.
+
+Use the selected local model for all supported AI tasks.
+
+For local inference, make requests directly from the browser to the user's configured local Ollama endpoint. Do not send local-mode prompts through the hosted Gemma API or a cloud backend.
+
+Implement:
+
+* Test Local Connection.
+* Check whether Ollama is reachable.
+* Model name configuration.
+* Clear loading states.
+* Connection error handling.
+* Instructions for installing Ollama and downloading Gemma 4.
+* Guidance for configuring local browser access and permitted origins where required.
+
+Do not pretend that a model is installed merely because a model name has been entered.
+
+The interface must distinguish between a configured model and a successfully tested model.
+
+If a connection cannot be established, display the actual reason where available and explain how to fix it.
+
+Important deployment limitation:
+
+Local inference is intended for a locally running copy of the application. A web application deployed remotely may not be able to access the visitor's localhost model because of browser security restrictions, network isolation, or CORS configuration.
+
+For dependable local-only operation, users should run the application locally and configure Ollama accordingly.
+
+After the application and model have been downloaded, the core local AI features should work without an internet connection, provided the local runtime and model are available.
+
+Publishing to DEV.to and using the hosted Gemma API require an internet connection.
+
+Never describe hosted inference as offline inference.
+
+# 4. MAIN WEBSITE DESIGN
+
+Build a polished, modern, professional interface.
+
+The application should feel like a carefully designed productivity product, not a generic AI chatbot template.
+
+Design direction:
+
+* Warm off-white backgrounds.
+* Forest-green primary color.
+* Soft sage accents.
+* Muted golden highlights.
+* Comfortable spacing.
+* Rounded cards with restrained shadows.
+* Elegant typography.
+* Small sloth-inspired decorative elements.
+* Minimal visual clutter.
+* Subtle animations.
+* Clear navigation.
+* High contrast and accessible controls.
+
+Suggested colors:
+
+Background: #F7F5EF
+Primary green: #244C3A
+Secondary green: #72947B
+Soft sage: #E5EDE4
+Accent gold: #E5B85C
+Main text: #202821
+Secondary text: #737A73
+
+Use CSS illustrations, inline SVGs, or simple original decorative graphics instead of requiring external image services.
+
+Avoid excessive gradients, neon effects, and oversized decorative elements.
+
+The site must work on desktop, tablets, and mobile phones.
+
+Provide a fixed or responsive sidebar on desktop and an appropriate mobile navigation menu.
+
+Create the following navigation items:
+
+1. Home
+2. Brain Dump
+3. Tiny Plan
+4. Two-Line Summary
+5. Reply Assistant
+6. DEV.to Blog Studio
+7. Settings
+8. About the Project
+
+The homepage should immediately explain what SlothFlow does.
+
+Use this headline:
+
+"Let AI handle the little things."
+
+Use this supporting text:
+
+"Turn messy thoughts into tiny plans, long notes into clear summaries, and everyday busywork into something you barely have to think about."
+
+Add a prominent button labelled "Start being a sloth".
+
+Show three feature cards:
+
+* Organize my thoughts
+* Plan my day
+* Summarize the chaos
+
+Add a small model status indicator displaying the current inference provider and model.
+
+Never display a green connected indicator unless a connection has actually been verified.
+
+# 5. FEATURE ONE: BRAIN DUMP
+
+Build a complete Brain Dump workspace.
+
+The user should be able to paste unstructured text containing thoughts, tasks, reminders, unfinished work, ideas, and personal or academic responsibilities.
+
+Provide an optional context field.
+
+Provide an energy selector with:
+
+* Very low
+* Low
+* Medium
+* High
+
+Provide an optional time-available selector.
+
+Include controls for:
+
+* Generate organized tasks.
+* Clear input.
+* Copy results.
+* Export results as Markdown.
+
+Use Gemma 4 to transform the input into a structured result.
+
+The output should include:
+
+1. A one-sentence summary of the user's main priorities.
+2. A short list of actionable tasks.
+3. A suggested priority for each task.
+4. A rough effort estimate.
+5. A next action that can be started in five minutes or less.
+6. Tasks that can reasonably be postponed.
+7. Optional tasks that can be removed or delegated, when appropriate.
+8. A realistic suggested order of work.
+
+Do not invent deadlines, commitments, or personal facts absent from the user's input.
+
+Do not automatically delete, send, or modify anything outside the application.
+
+Return machine-readable JSON from the model where practical. Validate the result before rendering it.
+
+If the response is malformed, handle the error gracefully rather than crashing the interface.
+
+# 6. FEATURE TWO: TINY PLAN
+
+Create a dedicated planning interface.
+
+The user provides:
+
+* The tasks they need to complete.
+* Available time.
+* Current energy level.
+* An optional deadline.
+* An optional priority preference.
+
+Gemma 4 should create a realistic plan that reduces unnecessary work and cognitive load.
+
+The result must contain:
+
+* The first task to start.
+* The smallest useful next action.
+* An ordered task list.
+* Estimated durations.
+* Short break suggestions.
+* A clear indication of what can wait.
+* A realistic stopping point.
+
+Avoid unrealistic schedules.
+
+Do not schedule more work than the supplied time reasonably allows.
+
+If the user gives contradictory deadlines or insufficient time, explicitly explain the conflict.
+
+Provide buttons to:
+
+* Regenerate the plan.
+* Make the plan easier.
+* Fit the plan into less time.
+* Increase the available time.
+* Copy the plan.
+* Save the plan locally.
+
+The "Make the plan easier" button must send a new instruction to Gemma 4 and use the returned plan.
+
+Do not implement this button as a cosmetic change.
+
+# 7. FEATURE THREE: TWO-LINE SUMMARY
+
+Build a concise summarization tool.
+
+The user can paste notes, a long message, meeting notes, study material, or a conversation they are permitted to share.
+
+The model must return:
+
+* Exactly two concise summary sentences by default.
+* The central message.
+* Important actions or decisions when present.
+* A warning when the supplied information is ambiguous or insufficient to support a conclusion.
+
+Add optional controls for:
+
+* More formal language.
+* Simpler wording.
+* Action items.
+* Important dates and deadlines.
+
+Do not claim that the application automatically reads WhatsApp, email, private accounts, or group chats.
+
+For the initial version, the user explicitly provides the text they want summarized.
+
+Include a privacy reminder near the input area.
+
+# 8. FEATURE FOUR: REPLY ASSISTANT
+
+Build a message-drafting workspace for everyday replies.
+
+The user can provide:
+
+* The message they received.
+* What they want to communicate.
+* Preferred tone.
+* Desired length.
+
+Supported tones:
+
+* Friendly
+* Professional
+* Casual
+* Polite but firm
+* Brief and direct
+
+Gemma 4 should generate a natural reply.
+
+Allow the user to regenerate the reply, edit it, and copy it.
+
+Never automatically send the reply to another person or service.
+
+Do not invent personal information, promises, or commitments on behalf of the user.
+
+# 9. MODEL TRANSPARENCY AND PRIVACY
+
+Privacy and honest communication are core product features.
+
+Show a persistent, easy-to-understand model status label.
+
+In Hosted Gemma Mode, display a notice explaining that AI input is sent to the configured hosted Gemma API.
+
+In Local Gemma Mode, display a notice explaining that AI input is sent to the configured local Ollama instance.
+
+When local inference is successfully configured and functioning, explicitly show that the selected AI task is running locally.
+
+Do not show "100% private," "fully offline," or similar claims unless the relevant behavior is actually supported and verified.
+
+Keep personal text and task history in local browser storage by default.
+
+Provide a setting to disable local history.
+
+Provide a button to clear stored application data.
+
+Avoid logging user-provided content on the server.
+
+Never send local-mode input to the cloud provider as a fallback.
+
+Do not collect personal information unless needed for a user-requested feature.
+
+Do not integrate analytics or advertising SDKs.
+
+Add an About page explaining how model choice affects cost, privacy, and offline capability.
+
+# 10. FEATURE FIVE: DEV.TO BLOG STUDIO
+
+Build a polished blog-writing workspace specifically for the DEV.to "Slow and Steady" open-AI challenge.
+
+The purpose is to help the developer turn the actual implementation of SlothFlow into a clear, technically credible developer article.
+
+The application must use the currently selected Gemma 4 inference provider to generate the article.
+
+Include form fields for:
+
+* Project name.
+* Creator name.
+* Project description.
+* GitHub repository URL.
+* Live demo URL.
+* Main features actually implemented.
+* Hosted model and model ID.
+* Local model and runtime.
+* Development environment.
+* Completed tests.
+* Known limitations.
+* What was learned.
+* Additional technical notes.
+
+Make optional fields truly optional.
+
+Never invent a GitHub URL, website URL, personal experience, benchmark, user count, test result, or completed feature.
+
+If a necessary detail is missing, ask the developer to fill it in or use a clearly marked editable placeholder.
+
+Provide a button labelled:
+
+"Generate my DEV.to article"
+
+The article should be polished, technically detailed, developer-focused, original, and suitable for the "Slow and Steady" theme.
+
+Target approximately 800–1,200 words when enough real information is available.
+
+The article should have a descriptive title and an engaging introduction.
+
+Suggested title:
+
+"SlothFlow: I Built a Lazy-Day AI Assistant with Open-Weight Gemma 4"
+
+The generator may improve this title.
+
+The article should cover:
+
+1. The problem of repetitive, mentally exhausting everyday tasks.
+2. Why SlothFlow was created.
+3. The actual features implemented.
+4. The application's architecture.
+5. Why Gemma 4 was chosen.
+6. The difference between local inference through Ollama and hosted Gemma inference.
+7. How the local model can protect user text from being sent to a remote inference service.
+8. What offline operation does and does not mean for this project.
+9. How a developer can run the project.
+10. Why open-weight models make it possible to experiment with different model sizes, runtimes, and deployment choices.
+11. Practical trade-offs, such as local hardware requirements and the limitations of hosted inference.
+12. Testing results that have actually been verified.
+13. Current limitations and potential improvements.
+14. The GitHub and demo links, if supplied.
+15. An invitation for developers to contribute or try the project.
+
+Discuss open innovation explicitly.
+
+Explain why using Gemma 4 is relevant rather than presenting the model as a decorative feature.
+
+Distinguish between a model's downloadable weights, the hosted inference API, and the application's own code.
+
+Do not say the entire application is open source unless a genuinely open-source license has been selected and the corresponding code is published.
+
+Do not claim that using an open-weight model automatically makes every use free, private, or offline.
+
+Never claim that a feature works offline until that specific behavior has been tested.
+
+Avoid generic AI-generated marketing language.
+
+Write in a natural developer voice.
+
+Include readable Markdown headings, short paragraphs, useful lists, and code blocks only when appropriate.
+
+The article must clearly separate implemented functionality from future plans.
+
+Before generating the article, inspect the actual application structure and available configuration where possible.
+
+If the developer has not supplied verified test results, say that the relevant tests remain to be performed rather than inventing results.
+
+Make the generated article editable.
+
+Include a Markdown editor and a rendered preview.
+
+The developer must be able to edit the title, description, tags, and body before submission.
+
+Add buttons for:
+
+* Regenerate article.
+* Regenerate introduction.
+* Improve technical details.
+* Make it more concise.
+* Copy Markdown.
+* Download Markdown.
+* Save Draft to DEV.to.
+* Publish to DEV.to.
+
+Each editing button must perform the corresponding real operation.
+
+Keep the article available if a publishing request fails.
+
+Use these default DEV.to tags:
+
+opensource, ai, productivity, webdev
+
+Enforce a maximum of four tags.
+
+Allow the developer to modify the tags before submitting the article.
+
+# 11. FEATURE SIX: DEV.TO API INTEGRATION
+
+Implement the actual DEV.to article-creation API integration.
+
+Use the official endpoint:
+
+POST https://dev.to/api/articles
+
+Use a server-side request.
+
+Include the appropriate headers:
+
+api-key: the configured DEV.to API key
+
+Accept: application/vnd.forem.api-v1+json
+
+Content-Type: application/json
+
+The request payload should have this structure:
+
+{
+"article": {
+"title": "Article title",
+"description": "Short article description",
+"body_markdown": "Complete article in Markdown",
+"published": false,
+"tags": ["opensource", "ai", "productivity", "webdev"]
+}
+}
+
+Create a server route such as:
+
+POST /api/devto/articles
+
+Validate all inputs on the server.
+
+Do not call the DEV.to publishing API directly from code containing a hard-coded API key.
+
+Read DEVTO_API_KEY only from a server-side secret.
+
+Never log or return the API key.
+
+Never store the API key in localStorage, browser session storage, client-side state, or a public file.
+
+## Default behavior: Save as draft
+
+The default publishing action must create an unpublished DEV.to draft.
+
+The request must use:
+
+published: false
+
+After a successful response, display the returned article status and the available DEV.to URL or draft destination.
+
+Do not report success unless the API confirms success.
+
+## Explicit publishing behavior
+
+Publishing publicly must require a separate user action.
+
+Show a confirmation dialog explaining that the article will become publicly visible on DEV.to.
+
+Require the user to review the title and confirm publication.
+
+Only then may the server send:
+
+published: true
+
+Never automatically publish a newly generated article.
+
+Do not publish when the user clicks "Generate article" or "Save Draft."
+
+## Protect the publishing integration
+
+Implement a publishing access gate for the app owner.
+
+Use a server-side PUBLISHER_ACCESS_CODE secret and validate it on the server before allowing draft creation or publication through an owner-configured DEV.to API key.
+
+If the access code is missing, keep actual API submission disabled and show instructions for configuration.
+
+Add basic request validation, sensible rate limiting, and duplicate-click protection.
+
+Keep the DEV.to API integration disabled if DEVTO_API_KEY is missing.
+
+Return helpful messages for:
+
+* Missing credentials.
+* Invalid access code.
+* Unauthorized API requests.
+* Rate limits.
+* Invalid article content.
+* DEV.to validation errors.
+* Network errors.
+* Unexpected server errors.
+
+Never expose sensitive stack traces or secrets to the browser.
+
+Keep the app private while configuring the owner publishing workflow, and do not distribute the owner access code.
+
+If the API integration is unavailable, the developer must still be able to copy or download the Markdown and publish it manually through the DEV.to editor.
+
+# 12. DEV.TO ARTICLE QUALITY CHECKLIST
+
+Before allowing publication, display a checklist:
+
+* The title is descriptive.
+* The article discusses the actual implementation.
+* Gemma 4 is correctly identified.
+* Local and hosted inference are clearly distinguished.
+* Privacy claims are accurate.
+* Offline claims are accurate.
+* The GitHub repository link is valid if supplied.
+* The demo link is valid if supplied.
+* The article describes verified results honestly.
+* The content has been reviewed by the developer.
+* No API keys, passwords, or personal secrets are included.
+
+Warnings should be shown when links are missing or claims have not been verified.
+
+Do not pretend that an automated checklist guarantees factual accuracy.
+
+Allow the developer to proceed after reviewing the warnings.
+
+Never create fictional benchmark results, issue counts, stars, test outcomes, or user feedback to make the article more persuasive.
+
+# 13. SETTINGS PAGE
+
+Create a proper settings page.
+
+Include:
+
+* Current inference provider.
+* Hosted Gemma 4 model selection.
+* Local Ollama endpoint.
+* Local Gemma 4 model name.
+* Local connection test.
+* Default energy level.
+* Preferred reply tone.
+* Local task-history preference.
+* Clear local data button.
+* Setup instructions for AI and publishing configuration.
+
+Display separate statuses for:
+
+1. Hosted Gemma configuration.
+2. Local Ollama connectivity.
+3. DEV.to publishing configuration.
+
+Do not assume that all three are available merely because the website has loaded.
+
+# 14. TECHNICAL DOCUMENTATION
+
+Generate a useful README.md.
+
+It must describe:
+
+* Project purpose.
+* Screenshots section with placeholders until screenshots exist.
+* Features.
+* Architecture.
+* Technology stack.
+* Why Gemma 4 was selected.
+* Local model installation.
+* Hosted model setup.
+* Environment variable configuration.
+* DEV.to integration.
+* Development commands.
+* Testing instructions.
+* Known limitations.
+* Privacy behavior.
+* Deployment instructions.
+* License considerations.
+
+Create an .env.example file containing placeholder variable names only.
+
+At minimum, document:
+
+GEMINI_API_KEY=
+DEVTO_API_KEY=
+PUBLISHER_ACCESS_CODE=
+
+Never include real keys.
+
+Document how to add secrets through Google AI Studio's supported secret configuration.
+
+For local development, include instructions for installing Ollama, downloading a Gemma 4 model, starting the runtime, and checking the connection.
+
+For example, document commands equivalent to:
+
+ollama pull gemma4:e2b
+
+ollama run gemma4:e2b
+
+Explain that the model must be downloaded before it can run offline.
+
+Document any necessary local browser-origin settings for Ollama.
+
+Do not advise users to disable browser security globally.
+
+Create an architecture section showing:
+
+User Interface
+|
++-- Hosted Gemma 4
+|       |
+|       +-- Server-side Google GenAI SDK
+|
++-- Local Gemma 4
+|       |
+|       +-- Local Ollama API
+|
++-- DEV.to Blog Studio
+|
++-- Protected server-side publishing route
+|
++-- DEV.to API
+
+Keep the local inference data path separate from the hosted inference path.
+
+# 15. OPEN-SOURCE READINESS
+
+Design the project so it can be published as an open-source repository.
+
+Use clear component boundaries.
+
+Add meaningful comments where helpful.
+
+Avoid unnecessary dependencies.
+
+Provide a license-selection note in the README.
+
+Do not choose a license for the project without making that decision explicit to the developer.
+
+Separate project source code from all secrets.
+
+Make it straightforward for another developer to fork the project and configure their own Gemma 4 model and DEV.to account.
+
+Describe future extension points for:
+
+* Additional locally hosted models.
+* Additional open-weight inference providers.
+* Importing user-provided task lists.
+* Optional local reminders.
+* More summarization formats.
+
+Do not build fake integrations or display buttons that do nothing.
+
+# 16. ERROR HANDLING AND SECURITY
+
+Validate all incoming API requests.
+
+Handle empty inputs and excessively large prompts.
+
+Set appropriate request-size limits.
+
+Handle timeouts and model failures.
+
+Provide meaningful messages rather than blank screens.
+
+Do not log API keys or sensitive user content.
+
+Protect the server from obvious malformed input.
+
+Never execute generated model output as code.
+
+Escape user-controlled text appropriately.
+
+Do not expose server environment variables to the frontend.
+
+Keep DEV.to credentials on the server.
+
+Require owner authorization for DEV.to writes.
+
+Add loading indicators and disable submission buttons while requests are in progress.
+
+Prevent duplicate publishing requests caused by repeated clicks.
+
+If the user switches to local inference, do not automatically switch back to hosted inference.
+
+Make failures visible and explain the available recovery steps.
+
+# 17. TESTING REQUIREMENTS
+
+Implement and run available checks.
+
+At minimum, test:
+
+1. The application loads successfully.
+2. Navigation works.
+3. Brain Dump handles empty and non-empty inputs.
+4. Tiny Plan accepts energy and time preferences.
+5. The summary interface renders model output.
+6. Reply Assistant supports different tones.
+7. Hosted mode uses a Gemma 4 model identifier.
+8. Local mode sends requests to the configured local Ollama endpoint.
+9. Local mode never silently sends requests to the hosted provider.
+10. API keys are not exposed in the generated frontend.
+11. DEV.to requests are made through a protected server route.
+12. Saving a draft uses published: false.
+13. Publishing requires explicit confirmation and authorized access.
+14. Missing configuration produces useful setup instructions.
+15. Markdown can be copied or downloaded.
+16. Layout works at mobile and desktop widths.
+
+Use automated tests where practical.
+
+Mock external APIs in tests when necessary.
+
+Do not claim a live API has been tested if credentials or a live service were unavailable.
+
+Distinguish passing local tests from unperformed live integration tests.
+
+Fix build errors, TypeScript errors, broken imports, and obvious runtime errors.
+
+# 18. FINAL ACCEPTANCE CRITERIA
+
+The project is only complete when:
+
+* A real website is present in the AI Studio workspace.
+* All main pages are navigable.
+* The core features have functional UI and actual Gemma 4 inference integration.
+* Hosted Gemma 4 and local Gemma 4 modes are clearly distinguished.
+* Local inference uses Ollama when selected.
+* Model errors do not cause a silent switch to a closed model.
+* The DEV.to Blog Studio generates a complete editable Markdown article.
+* The DEV.to API integration uses the official article endpoint.
+* Saving drafts and publishing are separate operations.
+* Publishing is protected and requires explicit confirmation.
+* Missing secrets do not crash the application.
+* The README and environment example are present.
+* The privacy and offline claims are accurate.
+* The application has been checked for basic functional and responsive behavior.
+
+Prioritize a working MVP over superficial animations.
+
+Start implementing the application now.
+
+Create the files, implement the functionality, run the available checks, and resolve errors. When you finish, summarize what was implemented, which tests actually passed, which live integrations still require credentials, and the exact steps required to configure Gemma 4 and DEV.to.
